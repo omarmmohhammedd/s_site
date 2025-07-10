@@ -322,8 +322,6 @@ const NewDate = () => {
                       >
                         <option hidden>اختر</option>
                         <option>السعودية</option>
-                        <option>البحرين</option>
-                        <option>مصر</option>
                       </select>
                       {errors.country && (
                         <span className="text-red-500">{errors.country}</span>

